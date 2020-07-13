@@ -22,13 +22,15 @@ Example: docker inspect ca6cbb290468 --format='{{.State.ExitCode}}'
 ```
 
 
-0: No foreground process attached such as Java process or a shell process that runs until SIGTERM event occurs.
+Exit Code 0: No foreground process attached such as Java process or a shell process that runs until SIGTERM event occurs.
 
 ```
 docker run hello-world
 docker ps -a | grep hello-world
 ```
 
+Exit Code 1: Indicates that the container stopped due to either an application error or an incorrect reference in Dockerfile to file that is not present in the container.
+ENTRYPOINT["java", "-jar", "sample.ja"]
 
 
 
