@@ -34,10 +34,26 @@ docker ps -a | grep hello-world
 Indicates that the container stopped due to either an application error or an incorrect reference in Dockerfile to file that is not present in the container.
 ENTRYPOINT["java", "-jar", "sample.ja"]
 
-### EXIT Code 137(Out-Of-Memory):
+### Exit Code 137 (Out-Of-Memory):
 This indicates that container received SIGKILL. This can be initiated manually by user or by the docker daemon.
 docker kill <container-id>
 To confirm if the container exited due to being out of memory, verify docker inspect against the container id and check if OOMKilled is true.
   
   
+### Exit code 143:
+Container receoved SIGTERM. Common events are 
+```
+docker stop <container-id>
+OR 
+docker-compose down <container-id>
+```
+
+### Exit code 126:
+Permission problem or command is not executable
+
+### Exit code 127:
+Possible typos in shell script with unrecognizable characters.
+
+
+
 
