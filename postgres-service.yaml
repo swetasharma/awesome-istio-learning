@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresdb
+  labels:
+    app: postgresdb
+spec:
+  ports:
+  - port: 5432
+    name: tcp
+  selector:
+    app: postgresdb
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresdb-v1
+  labels:
+    app: postgresdb
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresdb
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: postgresdb
+        version: v1
+    spec:
+      containers:
+      - name: postgresdb
+        image: postgres
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5432
+        env:
+          - name: POSTGRES_DB
+            value: simple-service
+          - name: POSTGRES_USER
+            value: user
+          - name: POSTGRES_PASSWORD
+            value: pass
+        readinessProbe:
+          exec:
+            command: ["psql", "-W", "pass", "-U", "user", "-d", "simple-service", "-c", "SELECT 1"]
+          initialDelaySeconds: 15
+          timeoutSeconds: 2
+        livenessProbe:
+          exec:
+            command: ["psql", "-W", "pass", "-U", "user", "-d", "simple-service", "-c", "SELECT 1"]
+          initialDelaySeconds: 45
+          timeoutSeconds: 2
+                
+---
