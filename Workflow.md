@@ -1,5 +1,5 @@
-# DevOps / SRE Challenge
-Challenge to understand the world of containers and microservices.
+# DevOps / SRE 
+Understand the world of containers and microservices.
 
 ## Assumption
 1. Only simple-service app is allowed to talk to postgres database. No service from outside can connect to postgres.
